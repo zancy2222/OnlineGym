@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Form</title>
+  <title>Admin Login Form</title>
   <link rel="stylesheet" href="Assets/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
   <style>
@@ -25,7 +25,7 @@ button:hover {
 </head>
 <body>
   <div class="wrapper">
-    <header>User Login Form</header>
+    <header>Admin Login Form</header>
     <form action="Partials/login_process.php" method="POST">
             <div class="field">
                 <div class="input-area">
@@ -43,12 +43,6 @@ button:hover {
             
             <input type="submit" value="Login">
         </form>
-
-    <div class="sign-txt">Not yet member? <a href="register.php">Signup now</a></div>
-    
-    <!-- Add the button below -->
-    <button onclick="window.location.href = 'adminLogin.php';">Admin</button>
-
   </div>
   
 
