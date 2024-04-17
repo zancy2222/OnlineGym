@@ -57,9 +57,9 @@
 <body>
     <div class="container">
         <h1>Welcome to Online Gym System</h1>
-        <a href="create_workout.html" class="button"><i class="fas fa-dumbbell"></i>Create Workout</a>
-        <a href="bmi.html" class="button"><i class="fas fa-weight"></i>BMI</a>
-        <a href="feedback.html" class="button"><i class="fas fa-comments"></i>Feedback</a>
+        <a href="create_workout.php" class="button"><i class="fas fa-dumbbell"></i>Create Workout</a>
+        <a href="bmi.php" class="button"><i class="fas fa-weight"></i>BMI</a>
+        <a href="feedback.php" class="button"><i class="fas fa-comments"></i>Feedback</a>
     </div>
 </body>
 </html>
