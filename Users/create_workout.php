@@ -23,7 +23,7 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 40px;
-            max-width: 800px;
+            max-width: 500px;
             width: 100%;
             text-align: center;
         }
@@ -34,65 +34,36 @@
             color: #2c723d;
         }
 
-        .workout-form {
+        .options {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
         }
 
-        .workout-section {
-            width: calc(33.33% - 20px);
-            margin-bottom: 40px;
-        }
-
-        .input-field {
-            margin-bottom: 20px;
-            width: 100%;
-            text-align: left;
-        }
-
-        .input-field label {
-            display: block;
-            font-size: 18px;
-            margin-bottom: 5px;
-            color: #333;
-        }
-
-        .input-field input, .input-field select {
-            width: calc(100% - 20px);
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            transition: border-color 0.3s;
-        }
-
-        .input-field input:focus, .input-field select:focus {
-            outline: none;
-            border-color: #2c723d;
-        }
-
-        .icon {
-            margin-right: 10px;
-            color: #2c723d;
-        }
-
-        .submit-btn {
-            padding: 15px 40px;
-            font-size: 18px;
+        .option {
+            flex: 1;
+            margin: 0 10px;
+            padding: 20px;
+            border-radius: 10px;
             background-color: #2c723d;
             color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
             transition: background-color 0.3s;
         }
 
-        .submit-btn:hover {
+        .option:hover {
             background-color: #1e502c;
         }
-        .submit-btn .icon{
-            color: #fff; /* Dark green color */
+
+        .option i {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .option-title {
+            font-size: 18px;
         }
         .back-btn {
             padding: 10px 20px;
@@ -120,68 +91,20 @@
 <body>
     <div class="container">
         <h1>Create Workout</h1>
-        <form class="workout-form" action="#" method="POST">
-            <div class="workout-section">
-                <h2>Cutting</h2>
-                <div class="input-field">
-                    <label for="cutName"><i class="fas fa-cut icon"></i>Name</label>
-                    <input type="text" id="cutName" name="cutName" placeholder="Enter workout name for cutting" required>
-                </div>
-                <div class="input-field">
-                    <label for="cutReps"><i class="fas fa-dumbbell icon"></i>Reps</label>
-                    <input type="number" id="cutReps" name="cutReps" placeholder="Enter number of reps" required>
-                </div>
-                <div class="input-field">
-                    <label for="cutDate"><i class="fas fa-calendar-alt icon"></i>Schedule Date</label>
-                    <input type="date" id="cutDate" name="cutDate" required>
-                </div>
-                <div class="input-field">
-                    <label for="cutTime"><i class="fas fa-clock icon"></i>Schedule Time</label>
-                    <input type="time" id="cutTime" name="cutTime" required>
-                </div>
-            </div>
-
-            <div class="workout-section">
-                <h2>Bulking</h2>
-                <div class="input-field">
-                    <label for="bulkName"><i class="fas fa-dumbbell icon"></i>Name</label>
-                    <input type="text" id="bulkName" name="bulkName" placeholder="Enter workout name for bulking" required>
-                </div>
-                <div class="input-field">
-                    <label for="bulkReps"><i class="fas fa-dumbbell icon"></i>Reps</label>
-                    <input type="number" id="bulkReps" name="bulkReps" placeholder="Enter number of reps" required>
-                </div>
-                <div class="input-field">
-                    <label for="bulkDate"><i class="fas fa-calendar-alt icon"></i>Schedule Date</label>
-                    <input type="date" id="bulkDate" name="bulkDate" required>
-                </div>
-                <div class="input-field">
-                    <label for="bulkTime"><i class="fas fa-clock icon"></i>Schedule Time</label>
-                    <input type="time" id="bulkTime" name="bulkTime" required>
-                </div>
-            </div>
-
-            <div class="workout-section">
-                <h2>Weight Loss</h2>
-                <div class="input-field">
-                    <label for="weightLossName"><i class="fas fa-dumbbell icon"></i>Name</label>
-                    <input type="text" id="weightLossName" name="weightLossName" placeholder="Enter workout name for weight loss" required>
-                </div>
-                <div class="input-field">
-                    <label for="weightLossReps"><i class="fas fa-dumbbell icon"></i>Reps</label>
-                    <input type="number" id="weightLossReps" name="weightLossReps" placeholder="Enter number of reps" required>
-                </div>
-                <div class="input-field">
-                    <label for="weightLossDate"><i class="fas fa-calendar-alt icon"></i>Schedule Date</label>
-                    <input type="date" id="weightLossDate" name="weightLossDate" required>
-                </div>
-                <div class="input-field">
-                    <label for="weightLossTime"><i class="fas fa-clock icon"></i>Schedule Time</label>
-                    <input type="time" id="weightLossTime" name="weightLossTime" required>
-                </div>
-            </div>
-            <button type="submit" class="submit-btn"><i class="fas fa-plus icon"></i>Create Workout</button>
-        </form>
+        <div class="options">
+            <a href="cut.php" class="option">
+                <i class="fas fa-cut"></i>
+                <div class="option-title">Cut</div>
+            </a>
+            <a href="bulk.php" class="option">
+                <i class="fas fa-dumbbell"></i>
+                <div class="option-title">Bulk</div>
+            </a>
+            <a href="weight_loss.php" class="option">
+                <i class="fas fa-weight"></i>
+                <div class="option-title">Weight Loss</div>
+            </a>
+        </div>
         <a href="Userpage.php" class="back-btn"><i class="fas fa-arrow-left"></i>Back</a>
     </div>
 </body>
