@@ -128,7 +128,7 @@
 </head>
 <body>
 <div class="container">
-    <form action="weightloss.php" method="POST">
+    <form action="../partials/weightloss_process.php" method="POST">
         <h1>Choose Your Weight Loss Workout</h1>
         <div class="form-group">
             <label for="exercise"><i class="fas fa-dumbbell icon"></i>Choose Exercise</label>

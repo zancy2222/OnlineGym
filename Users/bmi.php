@@ -121,12 +121,76 @@
         .back-btn:hover {
             background-color: #555;
         }
+
+        .results {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .bmi-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c723d;
+        }
+
+        .bmi-category {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        #bmi-message {
+            margin-top: 10px;
+            color: #666;
+        }
+
+        .back-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-btn i {
+            margin-right: 5px;
+        }
+
+        .back-btn:hover {
+            background-color: #555;
+        }
+        .save-btn {
+    padding: 15px 40px;
+    font-size: 18px;
+    background-color: #2c723d;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.save-btn:hover {
+    background-color: #1e502c;
+}
+
+.save-btn .icon {
+    color: #fff; /* Dark green color */
+}
+
     </style>
 </head>
 <body>
-    <div class="container">
+<div class="container">
         <h1>BMI Calculator</h1>
-        <form class="bmi-form" action="#" method="POST">
+        <form class="bmi-form" action="../partials/bmi_process.php" method="POST">
             <div class="input-field">
                 <label for="age"><i class="fas fa-user icon"></i>Age</label>
                 <input type="number" id="age" name="age" placeholder="Enter your age" required>
@@ -147,9 +211,64 @@
                 <label for="weight"><i class="fas fa-weight icon"></i>Weight (kg)</label>
                 <input type="number" id="weight" name="weight" placeholder="Enter your weight" required>
             </div>
-            <button type="submit" class="calculate-btn"><i class="fas fa-calculator icon"></i>Calculate BMI</button>
+            <button type="button" class="calculate-btn"><i class="fas fa-calculator icon"></i>Calculate BMI</button>
+            <button type="submit" class="save-btn"><i class="fas fa-save icon"></i>Save</button>
+            <!-- Removed 'Save' button -->
         </form>
+        <!-- Results section -->
+        <div id="results-container" style="display: none;">
+            <div class="results">
+                <span>Your BMI is: <span id="bmi-value" class="bmi-value"></span></span><br>
+                <span class="bmi-category" id="bmi-category"></span>
+            </div>
+            <p id="bmi-message"></p>
+        </div>
         <a href="Userpage.php" class="back-btn"><i class="fas fa-arrow-left"></i>Back</a>
     </div>
+
+    <script>
+        document.querySelector('.calculate-btn').addEventListener('click', function() {
+            // Get input values
+            const age = parseInt(document.getElementById('age').value);
+            const gender = document.getElementById('gender').value;
+            const height = parseInt(document.getElementById('height').value);
+            const weight = parseInt(document.getElementById('weight').value);
+
+            // Perform BMI calculation
+            const heightInMeters = height / 100;
+            const bmi = weight / (heightInMeters * heightInMeters);
+
+            // Display results
+            document.getElementById('bmi-value').textContent = bmi.toFixed(1);
+
+            let category = '';
+            if (bmi < 18.5) {
+                category = 'Underweight';
+            } else if (bmi >= 18.5 && bmi < 25) {
+                category = 'Normal weight';
+            } else if (bmi >= 25 && bmi < 30) {
+                category = 'Overweight';
+            } else {
+                category = 'Obese';
+            }
+            document.getElementById('bmi-category').textContent = category;
+
+            // Display message based on BMI category
+            let message = '';
+            if (category === 'Underweight') {
+                message = 'You may need to gain some weight for better health.';
+            } else if (category === 'Normal weight') {
+                message = 'Your weight is within the healthy range. Keep it up!';
+            } else if (category === 'Overweight') {
+                message = 'You may need to lose some weight for better health.';
+            } else {
+                message = 'You may need to lose weight urgently for better health.';
+            }
+            document.getElementById('bmi-message').textContent = message;
+
+            // Show results container
+            document.getElementById('results-container').style.display = 'block';
+        });
+    </script>
 </body>
 </html>

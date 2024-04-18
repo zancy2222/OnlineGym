@@ -1,3 +1,16 @@
+<?php
+session_start(); // Start the session
+
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    // If user is not logged in, redirect to login page
+    header("Location: login.php");
+    exit();
+}
+
+// User is logged in, display UserPage content
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,10 +69,13 @@
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to Online Gym System</h1>
+    <h1>Welcome to Online Gym System, <?php echo $_SESSION['username']; ?></h1>
         <a href="create_workout.php" class="button"><i class="fas fa-dumbbell"></i>Create Workout</a>
         <a href="bmi.php" class="button"><i class="fas fa-weight"></i>BMI</a>
         <a href="feedback.php" class="button"><i class="fas fa-comments"></i>Feedback</a>
+        <a href="History.php" class="button"><i class="fas fa-history"></i>History</a>
+        <a href="Notifs.php" class="button"><i class="fas fa-bell"></i>Notifs</a>
+
     </div>
 </body>
 </html>

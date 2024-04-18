@@ -115,21 +115,22 @@
 <body>
     <div class="container">
         <h1>Feedback Form</h1>
-        <form class="feedback-form" action="#" method="POST">
-            <div class="input-field">
-                <label for="name">Your Name</label>
-                <input type="text" id="name" name="name" placeholder="Enter your name" required>
-            </div>
-            <div class="input-field">
-                <label for="email">Your Email</label>
-                <input type="email" id="email" name="email" placeholder="Enter your email" required>
-            </div>
-            <div class="input-field">
-                <label for="message">Your Feedback</label>
-                <textarea id="message" name="message" placeholder="Enter your feedback" required></textarea>
-            </div>
-            <button type="submit" class="submit-btn"><i class="far fa-paper-plane"></i>Submit Feedback</button>
-        </form>
+        <form class="feedback-form" action="../partials/save_feedback.php" method="POST">
+    <div class="input-field">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+    </div>
+    <div class="input-field">
+        <label for="email">Your Email</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+    </div>
+    <div class="input-field">
+        <label for="message">Your Feedback</label>
+        <textarea id="message" name="message" placeholder="Enter your feedback" required></textarea>
+    </div>
+    <button type="submit" class="submit-btn"><i class="far fa-paper-plane"></i>Submit Feedback</button>
+</form>
+
         <a href="Userpage.php" class="back-btn"><i class="fas fa-arrow-left"></i>Back</a>
     </div>
 </body>

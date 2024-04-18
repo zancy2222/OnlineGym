@@ -128,7 +128,7 @@
 </head>
 <body>
 <div class="container">
-    <form action="bulk.php" method="POST">
+    <form action="../partials/bulk_process.php" method="POST">
         <h1>Choose Your Bulk Workout</h1>
         <div class="form-group">
             <label for="day"><i class="far fa-calendar-alt icon"></i>Select Day</label>

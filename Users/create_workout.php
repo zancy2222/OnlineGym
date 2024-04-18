@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,6 +45,8 @@
         .option {
             flex: 1;
             margin: 0 10px;
+            width: 50px;
+
             padding: 20px;
             border-radius: 10px;
             background-color: #2c723d;
@@ -65,6 +68,7 @@
         .option-title {
             font-size: 18px;
         }
+
         .back-btn {
             padding: 10px 20px;
             font-size: 16px;
@@ -88,6 +92,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Create Workout</h1>
@@ -104,8 +109,11 @@
                 <i class="fas fa-weight"></i>
                 <div class="option-title">Weight Loss</div>
             </a>
+           
+
         </div>
         <a href="Userpage.php" class="back-btn"><i class="fas fa-arrow-left"></i>Back</a>
     </div>
 </body>
+
 </html>

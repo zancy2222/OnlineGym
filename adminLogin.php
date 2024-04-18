@@ -1,3 +1,26 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Define the correct email and password
+    $correct_email = "Admin@gmail.com";
+    $correct_password = "admin123";
+
+    // Get the submitted email and password
+    $submitted_email = $_POST["email"];
+    $submitted_password = $_POST["password"];
+
+    // Check if the submitted credentials match the correct ones
+    if ($submitted_email === $correct_email && $submitted_password === $correct_password) {
+        // Redirect to Dashboard.php
+        header("Location: Admin/Dashboard.php");
+        exit(); // Stop further execution
+    } else {
+        // Incorrect credentials, display an error message or perform any other action
+        echo "<script>alert('Incorrect password');</script>";
+        echo "<script>window.location.href = 'adminLogin.php';</script>"; // Redirect back to login page
+        exit();
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,23 +49,23 @@ button:hover {
 <body>
   <div class="wrapper">
     <header>Admin Login Form</header>
-    <form action="Partials/login_process.php" method="POST">
-            <div class="field">
-                <div class="input-area">
-                    <i class="icon fas fa-envelope"></i>
-                    <input type="email" id="email" name="email" placeholder="Email" required>
-                </div>
+    <form action="" method="POST">
+        <div class="field">
+            <div class="input-area">
+                <i class="icon fas fa-envelope"></i>
+                <input type="email" id="email" name="email" placeholder="Email" required>
             </div>
-            
-            <div class="field">
-                <div class="input-area">
-                    <i class="icon fas fa-lock"></i>
-                    <input type="password" id="password" name="password" placeholder="Password" required>
-                </div>
+        </div>
+        
+        <div class="field">
+            <div class="input-area">
+                <i class="icon fas fa-lock"></i>
+                <input type="password" id="password" name="password" placeholder="Password" required>
             </div>
-            
-            <input type="submit" value="Login">
-        </form>
+        </div>
+        
+        <input type="submit" value="Login">
+    </form>
   </div>
   
 

@@ -12,7 +12,7 @@
     <div class="container">
         <header>User Registration</header>
 
-        <form action="Partials/register.php" method="post">
+        <form action="partials/reg_process.php" method="post">
             <div class="form first">
                 <div class="details personal">
                     <span class="title">Personal Details</span>

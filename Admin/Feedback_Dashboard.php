@@ -2,23 +2,10 @@
 // Include the database connection file
 include '../partials/db_conn.php';
 
-// Check if the delete button is clicked
-if (isset($_POST['delete_id'])) {
-    $delete_id = $_POST['delete_id'];
-
-    // Query to delete user record based on ID
-    $delete_sql = "DELETE FROM users WHERE id = $delete_id";
-    if ($conn->query($delete_sql) === TRUE) {
-                echo "<script>alert('Record deleted successfully');</script>";
-        echo "<script>window.location.href = 'Dashboard.php';</script>"; // Redirect back to login page
-        exit();
-    } else {
-        echo "Error deleting record: " . $conn->error;
-    }
-}
-
-// Query to fetch users
-$sql = "SELECT * FROM users";
+// Query to fetch feedback records
+$sql = "SELECT f.id, u.first_name, u.last_name, f.email, f.message, f.submitted_at
+        FROM feedback f
+        INNER JOIN users u ON f.user_id = u.id";
 $result = $conn->query($sql);
 
 ?>
@@ -36,7 +23,7 @@ $result = $conn->query($sql);
         }
 
         table {
-            width: 102%;
+            width: 100%;
             border-collapse: collapse;
             border-radius: 8px;
             overflow: hidden;
@@ -97,9 +84,9 @@ $result = $conn->query($sql);
             transition: background-color 0.3s;
         }
 
-        .update-button {
-            background-color: #2c723d;
-            color: #fff;
+        .reply-button {
+            background-color: yellow;
+            color: black;
             border: none;
         }
 
@@ -109,10 +96,55 @@ $result = $conn->query($sql);
             border: none;
         }
 
-        .update-button:hover,
+        .reply-button:hover {
+            background-color: darkgoldenrod;
+        }
+
         .delete-button:hover {
             background-color: #1e502c;
         }
+        #reply-form {
+        display: none;
+        max-width: 400px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #reply-form textarea {
+        width: 100%;
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        resize: vertical;
+    }
+
+    #reply-form button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-right: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    #reply-form button.close-btn {
+        background-color: #f44336;
+    }
+
+    #reply-form button:hover {
+        background-color: #45a049;
+    }
+
+    #reply-form .btn-container {
+        text-align: right;
+    }
     </style>
     <title>Admin Dashboard</title>
 </head>
@@ -135,14 +167,14 @@ $result = $conn->query($sql);
             </div>
 
             <div class="sidebar">
-                <a href="Dashboard.php" class="active">
+                <a href="Dashboard.php">
                     <span class="material-icons-sharp">
                         dashboard
                     </span>
                     <h3>Dashboard</h3>
                 </a>
 
-                <a href="Cut_Dashboard.php" >
+                <a href="Cut_Dashboard.php">
                     <span class="material-icons-sharp">
                         fitness_center
                     </span>
@@ -161,7 +193,7 @@ $result = $conn->query($sql);
                     </span>
                     <h3>Weight loss details</h3>
                 </a>
-                <a href="Feedback_Dashboard.php">
+                <a href="Feedback_Dashboard.php" class="active">
                     <span class="material-icons-sharp">
                         mail_outline
                     </span>
@@ -187,62 +219,55 @@ $result = $conn->query($sql);
         </aside>
 
         <main>
-
             <div class="table-container">
-            <table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Username</th>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Gender</th>
-            <th>Number</th>
-            <th>Address</th>
-            <th>Email</th>
-            <th>Password</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-        if ($result->num_rows > 0) {
-            // Output data of each row
-            while ($row = $result->fetch_assoc()) {
-                echo "<tr>";
-                echo "<td>" . $row["id"] . "</td>";
-                echo "<td>" . $row["username"] . "</td>";
-                echo "<td>" . $row["first_name"] . " " . $row["last_name"] . "</td>";
-                echo "<td>" . $row["age"] . "</td>";
-                echo "<td>" . $row["gender"] . "</td>";
-                echo "<td>" . $row["number"] . "</td>";
-                echo "<td>" . $row["address"] . "</td>";
-                echo "<td>" . $row["email"] . "</td>";
-                echo "<td>" . $row["password"] . "</td>";
-                echo '<td class="action-buttons">';
-                // Delete button form
-                echo '<form method="post">';
-                echo '<input type="hidden" name="delete_id" value="' . $row["id"] . '">';
-                echo '<button type="submit" class="delete-button">Delete</button>';
-                echo '</form>';
-                echo '</td>';
-                echo "</tr>";
-            }
-        } else {
-            echo "<tr><td colspan='10'>No users found</td></tr>";
-        }
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Message</th>
+                            <th>Submitted At</th>
+                            <th>Actions</th> <!-- New column for actions -->
 
-        // Close database connection
-        $conn->close();
-        ?>
-    </tbody>
-</table>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if ($result->num_rows > 0) {
+                            // Output data of each row
+                            while ($row = $result->fetch_assoc()) {
+                                echo "<tr>";
+                                echo "<td>" . $row["id"] . "</td>";
+                                echo "<td>" . $row["first_name"] . " " . $row["last_name"] . "</td>";
+                                echo "<td>" . $row["email"] . "</td>";
+                                echo "<td>" . $row["message"] . "</td>";
+                                echo "<td>" . $row["submitted_at"] . "</td>";
+                                echo '<td class="action-buttons">';
+                                echo '<button class="reply-button" data-feedback-id="' . $row["id"] . '">Reply</button>';
+                                echo '</td>';
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='5'>No feedback records found</td></tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
 
             </div>
-
-
+            <!-- Reply form -->
+            <div id="reply-form">
+    <form action="reply_process.php" method="POST">
+        <input type="hidden" id="feedback-id" name="feedback_id" value="">
+        <textarea name="admin_reply" id="admin-reply" cols="30" rows="5" placeholder="Enter your reply here" required></textarea>
+        <div class="btn-container">
+            <button type="submit">Send Reply</button>
+            <button type="button" class="close-btn" onclick="closeReplyForm()">Close</button>
+        </div>
+    </form>
+</div>
         </main>
-        <!-- End of Main Content -->
 
         <!-- Right Section -->
         <div class="right-section">
@@ -271,7 +296,7 @@ $result = $conn->query($sql);
                 <div class="logo">
                     <img src="Assets/images/human.png">
                     <h2>Admin</h2>
-                    <p>User Details</p>
+                    <p>Feedback Details</p>
                 </div>
             </div>
 
@@ -279,9 +304,31 @@ $result = $conn->query($sql);
 
 
     </div>
+    <script>
+        // JavaScript to handle showing reply form when reply button is clicked
+        const replyButtons = document.querySelectorAll('.reply-button');
+        const replyForm = document.getElementById('reply-form');
+        const feedbackIdInput = document.getElementById('feedback-id');
 
+        replyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const feedbackId = button.dataset.feedbackId;
+                feedbackIdInput.value = feedbackId;
+                replyForm.style.display = 'block';
+            });
+        });
+
+        function closeReplyForm() {
+        document.getElementById('reply-form').style.display = 'none';
+    }
+    </script>
     <script src="Assets/orders.js"></script>
     <script src="Assets/index.js"></script>
 </body>
 
 </html>
+
+<?php
+// Close database connection
+$conn->close();
+?>

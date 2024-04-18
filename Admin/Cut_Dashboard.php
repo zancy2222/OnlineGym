@@ -6,19 +6,21 @@ include '../partials/db_conn.php';
 if (isset($_POST['delete_id'])) {
     $delete_id = $_POST['delete_id'];
 
-    // Query to delete user record based on ID
-    $delete_sql = "DELETE FROM users WHERE id = $delete_id";
+    // Query to delete workout record based on ID
+    $delete_sql = "DELETE FROM workouts WHERE id = $delete_id";
     if ($conn->query($delete_sql) === TRUE) {
                 echo "<script>alert('Record deleted successfully');</script>";
-        echo "<script>window.location.href = 'Dashboard.php';</script>"; // Redirect back to login page
+        echo "<script>window.location.href = 'Cut_Dashboard.php';</script>"; // Redirect back to login page
         exit();
     } else {
         echo "Error deleting record: " . $conn->error;
     }
 }
 
-// Query to fetch users
-$sql = "SELECT * FROM users";
+// Query to fetch workout records
+$sql = "SELECT u.id as user_id, u.first_name, u.last_name, w.id, w.workout_name, w.sets, w.reps, w.schedule_date, w.schedule_time 
+        FROM workouts w
+        INNER JOIN users u ON w.user_id = u.id";
 $result = $conn->query($sql);
 
 ?>
@@ -36,7 +38,7 @@ $result = $conn->query($sql);
         }
 
         table {
-            width: 102%;
+            width: 100%;
             border-collapse: collapse;
             border-radius: 8px;
             overflow: hidden;
@@ -135,14 +137,14 @@ $result = $conn->query($sql);
             </div>
 
             <div class="sidebar">
-                <a href="Dashboard.php" class="active">
+                <a href="Dashboard.php">
                     <span class="material-icons-sharp">
                         dashboard
                     </span>
                     <h3>Dashboard</h3>
                 </a>
 
-                <a href="Cut_Dashboard.php" >
+                <a href="Cut_Dashboard.php" class="active">
                     <span class="material-icons-sharp">
                         fitness_center
                     </span>
@@ -192,15 +194,12 @@ $result = $conn->query($sql);
             <table>
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Username</th>
             <th>Name</th>
-            <th>Age</th>
-            <th>Gender</th>
-            <th>Number</th>
-            <th>Address</th>
-            <th>Email</th>
-            <th>Password</th>
+            <th>Workout Name</th>
+            <th>Sets</th>
+            <th>Reps</th>
+            <th>Schedule Date</th>
+            <th>Time</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -210,15 +209,12 @@ $result = $conn->query($sql);
             // Output data of each row
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>";
-                echo "<td>" . $row["id"] . "</td>";
-                echo "<td>" . $row["username"] . "</td>";
                 echo "<td>" . $row["first_name"] . " " . $row["last_name"] . "</td>";
-                echo "<td>" . $row["age"] . "</td>";
-                echo "<td>" . $row["gender"] . "</td>";
-                echo "<td>" . $row["number"] . "</td>";
-                echo "<td>" . $row["address"] . "</td>";
-                echo "<td>" . $row["email"] . "</td>";
-                echo "<td>" . $row["password"] . "</td>";
+                echo "<td>" . $row["workout_name"] . "</td>";
+                echo "<td>" . $row["sets"] . "</td>";
+                echo "<td>" . $row["reps"] . "</td>";
+                echo "<td>" . $row["schedule_date"] . "</td>";
+                echo "<td>" . $row["schedule_time"] . "</td>";
                 echo '<td class="action-buttons">';
                 // Delete button form
                 echo '<form method="post">';
@@ -229,7 +225,7 @@ $result = $conn->query($sql);
                 echo "</tr>";
             }
         } else {
-            echo "<tr><td colspan='10'>No users found</td></tr>";
+            echo "<tr><td colspan='7'>No workouts found</td></tr>";
         }
 
         // Close database connection
@@ -237,7 +233,6 @@ $result = $conn->query($sql);
         ?>
     </tbody>
 </table>
-
             </div>
 
 
@@ -271,7 +266,7 @@ $result = $conn->query($sql);
                 <div class="logo">
                     <img src="Assets/images/human.png">
                     <h2>Admin</h2>
-                    <p>User Details</p>
+                    <p>Cut Details</p>
                 </div>
             </div>
 
