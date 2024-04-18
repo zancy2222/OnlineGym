@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Execute query
     if ($conn->query($sql) === TRUE) {
         echo "<script>alert('New record created successfully');</script>";
-        echo "<script>window.location.href = '../register.php';</script>"; // Redirect back to login page
+        echo "<script>window.location.href = '../Login.php';</script>"; // Redirect back to login page
         exit();
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
